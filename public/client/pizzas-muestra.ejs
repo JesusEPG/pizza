@@ -1,0 +1,24 @@
+<div class="">
+	<div class="features_items"><!--features_items-->
+		<h2 class="title text-center">PIZZAS</h2>
+		<div class="col-sm-4" ng-repeat="producto in pizzas" >
+			<div class="product-image-wrapper">
+				<div class="single-products">
+						<div class="productinfo text-center"> 
+							<img src="{{producto.img}}" alt="" />
+							<h2 > {{producto.nombre}} </h2>
+							<p ng-repeat="ing in producto.ing"> {{ing}} </p>
+							<a href="#cart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+						</div>
+						<div class="product-overlay">
+							<div class="overlay-content">
+								<h2>{{producto.price}}</h2>
+								<p>{{producto.nombre}}</p>
+								<a href="#cart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div><!--features_items-->
+</div>
