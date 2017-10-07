@@ -6,20 +6,25 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose'); 
-
+var config      = require('./config/db'); // get db config file
 var index = require('./routes/index');
 var users = require('./routes/users');
+var passport  = require('passport');
+
 
 var Pizza = require('./app/models/pizzas');
 
 var app = express();
-//var server = require('http').createServer(app)
-//var io = require('socket.io').listen(server); //server
-
 
 // Socket.io
 var io           = socket_io();
 app.io           = io;
+
+// pass passport for configuration
+require('./config/passport')(passport);
+
+// Use the passport package in our application
+app.use(passport.initialize());
 
 var clientio  = require('socket.io-client');
 var client    = clientio.connect('http://localhost:3013'); //cliente del server
@@ -35,12 +40,7 @@ io.sockets.on('connection', function (socket) {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// connect to our mongoDB database 
-// (uncomment after you enter in your own credentials in config/db.js)
-// mongoose.connect(db.url); 
-
-
-mongoose.connect('mongodb://localhost:27017/tiendapizza');
+mongoose.connect(config.database);
 
 var pizzas = [ 
                 {
@@ -88,26 +88,15 @@ var pizzas = [
                 }
             ];
 
-Pizza.insertMany(pizzas)
+/*Pizza.insertMany(pizzas)
     .then(function(mongoosePizzas) {
-         /* ... */
+         
          console.log(`Pizzas insertadas: ${mongoosePizzas.lenght}`);
     })
     .catch(function(err) {
-        /* Error handling */
+        
         console.error(err);
-    });
-
-/*var pizza = new Pizza({ id: 001,
-                    nombre: 'Prosciutto',
-                    ing: ["TOMATE", "MOZZARELLA", "JAMÓN DULCE"],
-                    price: '56',
-                    img:'/images/home/product1.jpg'});
-
-            pizza.save(function (err, pizza) {
-              if (err) return console.error(err);
-              console.log('insertado!!!!');
-            });*/
+    });*/
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -119,11 +108,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
-
-
-/*app.get('*', function(req, res) {
-  res.render('index'); // load our public/index.html file
-});*/
 
 // routes ==================================================
 require('./app/routes')(app); // configure our routes
@@ -145,9 +129,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-/*server.listen(3000, function(){
-    console.log('Servidor está funcionando en http://localhost:3000');
-}); */
 
 module.exports = app;

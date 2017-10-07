@@ -1,12 +1,3 @@
-/*price range*/
-
- $('#sl2').slider();
-
-	var RGBChange = function() {
-	  $('#RGB').css('background', 'rgb('+r.getValue()+','+g.getValue()+','+b.getValue()+')')
-	};	
-		
-/*scroll to top*/
 
 $(document).ready(function(){
 	$(function () {
@@ -34,21 +25,75 @@ $(document).ready(function(){
 		'ngRoute',
 		'pizzasOn.controllers',
 		'pizzasOn.directives',
-		'PizzaService'
+		'PizzaService',
+		'Constants'
 		]);
 
-	app1.config(['$routeProvider', function($routeProvider){
+	app1.config(['$routeProvider','$stateProvider', '$urlRouterProvide' , function($routeProvider,$stateProvider, $urlRouterProvider){
 		$routeProvider
-			.when('/',{
-				templateUrl: 'client/pizzas-online.ejs',
+			.when("/",{
+				templateUrl: 'client/view/pizzas-online.ejs',
 				controller: 'PizzasController'
 			})
-			.when('/cart',{
-				templateUrl:'client/cart.ejs',
+			.when("/cart",{
+				templateUrl:'client/view/cart.ejs'
+
+			})
+			.when("/checkout",{
+				templateUrl:'client/view/checkout.ejs'
+			})
+			.when("/contact-us",{
+				templateUrl:'client/view/contact-us.ejs'
+			})
+			/*.when("/login",{
+				templateUrl:'client/view/login.ejs'
+			})*/
+			.when("/product-details",{
+				templateUrl:'client/view/product-details.ejs',
 				controller: 'PizzasController'
 			})
-			
-	}]);
+			.when("/404",{
+				templateUrl:'client/view/404.ejs'
+			})
+
+
+			.otherwise({
+        		redirectTo: "/"
+    		});
+
+    	$stateProvider
+		  .state('outside.login', {
+		    url: '/login',
+		    templateUrl: 'client/view/login.ejs',
+		    controller: 'LoginCtrl'
+		  })
+		  .state('outside.register', {
+		    url: '/register',
+		    templateUrl: 'client/view/register.ejs',
+		    controller: 'RegisterCtrl'
+		  })
+		  .state('inside', {
+		    url: '/inside',
+		    templateUrl: 'client/view/inside.ejs',
+		    controller: 'InsideCtrl'
+		  });
+		 
+		$urlRouterProvider.otherwise('/outside/login');
+		
+	}])
+
+
+	app1.run(function ($rootScope, $state, AuthService, AUTH_EVENTS) {
+	  $rootScope.$on('$stateChangeStart', function (event,next, nextParams, fromState) {
+	    if (!AuthService.isAuthenticated()) {
+	      console.log(next.name);
+	      if (next.name !== 'outside.login' && next.name !== 'outside.register') {
+	        event.preventDefault();
+	        $state.go('outside.login');
+	      }
+	    }
+	  });
+	});
 	
 })();
 

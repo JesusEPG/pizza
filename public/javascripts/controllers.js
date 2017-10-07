@@ -1,43 +1,3 @@
-/*factory('Pizza', ['$http', function($http) {
-
-		    var Pizza = {
-		    async: function() {
-		      // $http returns a promise, which has a then function, which also returns a promise
-		      var promise = $http.get('/api/pizzas').then(function (response) {
-		        // The then function here is an opportunity to modify the response
-		        console.log(response);
-		        // The return value gets picked up by the then in the controller.
-		        return response.data;
-		      });
-		      // Return the promise to the controller
-		      return promise;
-		    }
-		  };
-		  return Pizza;
-
-
-
-		    return {
-		        // call to get all nerds
-		        get : function() {
-		        	console.log('Hola en servicio');
-		            return $http.get('/api/pizzas');
-		        },
-
-		                // these will work when more API routes are defined on the Node side of things
-		        // call to POST and create a new pizza
-		        create : function(pizzaData) {
-		            return $http.post('/api/pizzas', pizzaData);
-		        },
-
-		        // call to DELETE a pizza
-		        delete : function(id) {
-		            return $http.delete('/api/pizzas/' + id);
-		        }
-		    }       
-		}]);*/
-		
-
 (function () {
 	angular.module('pizzasOn.controllers', [])
 
@@ -60,5 +20,75 @@
 			    console.log(response);
 			  });*/
 	})
+
+	.controller('LoginCtrl', function($scope, AuthService, $state) {
+	  $scope.user = {
+	    name: '',
+	    password: ''
+	  };
+	 
+	  $scope.login = function() {
+	    AuthService.login($scope.user).then(function(msg) {
+	      $state.go('inside');
+	    }, function(errMsg) {
+	      var alertPopup = alert({
+	        title: 'Login failed!',
+	        template: errMsg
+	      });
+	    });
+	  };
+	})
+	 
+	.controller('RegisterCtrl', function($scope, AuthService, $ionicPopup, $state) {
+	  $scope.user = {
+	    name: '',
+	    password: ''
+	  };
+	 
+	  $scope.signup = function() {
+	    AuthService.register($scope.user).then(function(msg) {
+	      $state.go('outside.login');
+	      var alertPopup = alert({
+	        title: 'Register success!',
+	        template: msg
+	      });
+	    }, function(errMsg) {
+	      var alertPopup = alert({
+	        title: 'Register failed!',
+	        template: errMsg
+	      });
+	    });
+	  };
+	})
+	 
+	.controller('InsideCtrl', function($scope, AuthService, $http, $state) {
+	  $scope.destroySession = function() {
+	    AuthService.logout();
+	  };
+	 
+	  $scope.getInfo = function() {
+	    $http.get('/api/memberinfo').then(function(result) {
+	      $scope.memberinfo = result.data.msg;
+	    });
+	  };
+	 
+	  $scope.logout = function() {
+	    AuthService.logout();
+	    $state.go('outside.login');
+	  };
+	})
+	 
+	.controller('AppCtrl', function($scope, $state, AuthService, AUTH_EVENTS) {
+	  $scope.$on(AUTH_EVENTS.notAuthenticated, function(event) {
+	    AuthService.logout();
+	    $state.go('outside.login');
+	    var alertPopup = alert({
+	      title: 'Session Lost!',
+	      template: 'Sorry, You have to login again.'
+	    });
+	  });
+	});
+	
 	
 })();
+

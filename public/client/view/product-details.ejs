@@ -1,0 +1,91 @@
+<section>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="left-sidebar">
+					<h2>Category</h2>
+					<div class="panel-group category-products" id="accordian"><!--category-productsr-->
+						<category-products> </category-products>
+					</div><!--/category-products-->
+				
+					<div class="brands_products"><!--brands_products-->
+							<h2>Promociones</h2>
+							<div class="brands-name">
+								<ul class="nav nav-pills nav-stacked">
+									<li><a href="#"> <span class="pull-right">(50)</span>Lunes</a></li>
+									<li><a href="#"> <span class="pull-right">(56)</span>Martes</a></li>
+									<li><a href="#"> <span class="pull-right">(27)</span>Miercoles</a></li>
+									<li><a href="#"> <span class="pull-right">(32)</span>Sabados</a></li>
+									<li><a href="#"> <span class="pull-right">(5)</span>Domingos</a></li>
+								</ul>
+							</div>
+						</div><!--/brands_products-->
+					
+				</div>
+			</div>
+			
+			<div class="col-sm-9 padding-right">
+				<div class="product-details"><!--product-details-->
+					<div class="col-sm-5">
+						<div class="view-product">
+							<img src="images/product-details/1.jpg" alt="" />
+						</div>
+						<div id="similar-product" class="carousel slide" data-ride="carousel">
+							
+							  <!-- Wrapper for slides -->
+							    <div class="carousel-inner">
+									<div class="item active">
+									  <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
+									  <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
+									  <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
+									</div>
+									<div class="item">
+									  <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
+									  <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
+									  <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
+									</div>
+									<div class="item">
+									  <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
+									  <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
+									  <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
+									</div>
+									
+								</div>
+
+							  <!-- Controls -->
+							  <a class="left item-control" href="#similar-product" data-slide="prev">
+								<i class="fa fa-angle-left"></i>
+							  </a>
+							  <a class="right item-control" href="#similar-product" data-slide="next">
+								<i class="fa fa-angle-right"></i>
+							  </a>
+						</div>
+
+					</div>
+					<div class="col-sm-7" ng-repeat="producto in pizzas | limitTo: 1">
+						<div class="product-information"><!--/product-information-->
+							<img src="images/product-details/new.jpg" class="newarrival" alt="" />
+							<h2>{{producto.nombre}}</h2>
+							<p>Web ID: {{producto.id}}</p>
+							<img src="images/product-details/rating.png" alt="" />
+							<span>
+								<span>US ${{producto.price}}</span>
+								<label>Quantity:</label>
+								<input type="text" value="3" />
+								<button type="button" class="btn btn-fefault cart">
+									<i class="fa fa-shopping-cart"></i>
+									Add to cart
+								</button>
+							</span>
+							<p><b>Availability:</b> In Stock</p>
+							<p><b>Condition:</b> New</p>
+							<p><b>Brand:</b> E-SHOPPER</p>
+							<a href=""><img src="images/product-details/share.png" class="share img-responsive"  alt="" /></a>
+						</div><!--/product-information-->
+					</div>
+				</div><!--/product-details-->
+				
+			</div>
+		</div>
+	</div>
+</section>
