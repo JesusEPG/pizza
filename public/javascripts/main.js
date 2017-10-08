@@ -26,10 +26,11 @@ $(document).ready(function(){
 		'pizzasOn.controllers',
 		'pizzasOn.directives',
 		'PizzaService',
-		'Constants'
+		'Constants',
+		"ui.router"
 		]);
 
-	app1.config(['$routeProvider','$stateProvider', '$urlRouterProvide' , function($routeProvider,$stateProvider, $urlRouterProvider){
+	app1.config(['$routeProvider','$stateProvider', '$urlRouterProvider', function($routeProvider, $stateProvider, $urlRouterProvider){
 		$routeProvider
 			.when("/",{
 				templateUrl: 'client/view/pizzas-online.ejs',
@@ -45,9 +46,9 @@ $(document).ready(function(){
 			.when("/contact-us",{
 				templateUrl:'client/view/contact-us.ejs'
 			})
-			/*.when("/login",{
+			.when("/login",{
 				templateUrl:'client/view/login.ejs'
-			})*/
+			})
 			.when("/product-details",{
 				templateUrl:'client/view/product-details.ejs',
 				controller: 'PizzasController'
@@ -62,6 +63,26 @@ $(document).ready(function(){
     		});
 
     	$stateProvider
+    	/* .state('home', {
+		    url: '/',
+		    templateUrl: 'client/view/pizzas-online.ejs',
+		    controller: 'PizzasController'
+		  })
+		  .state('cart', {
+		    url: '/cart',
+		    templateUrl: 'client/view/cart.ejs',
+		    //controller: 'PizzasController'
+		  })
+		  .state('checkout', {
+		    url: '/checkout',
+		    templateUrl: 'client/view/checkout.ejs',
+		    //controller: 'PizzasController'
+		  })
+		  .state('product-details', {
+		    url: '/product-details',
+		    templateUrl: 'client/view/product-details.ejs',
+		    controller: 'PizzasController'
+		  })*/
 		  .state('outside.login', {
 		    url: '/login',
 		    templateUrl: 'client/view/login.ejs',
@@ -78,7 +99,7 @@ $(document).ready(function(){
 		    controller: 'InsideCtrl'
 		  });
 		 
-		$urlRouterProvider.otherwise('/outside/login');
+		//$urlRouterProvider.otherwise('/outside/login');
 		
 	}])
 
