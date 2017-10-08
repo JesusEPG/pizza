@@ -30,65 +30,22 @@ $(document).ready(function(){
 		"ui.router"
 		]);
 
-	app1.config(['$routeProvider','$stateProvider', '$urlRouterProvider', function($routeProvider, $stateProvider, $urlRouterProvider){
-		$routeProvider
-			.when("/",{
-				templateUrl: 'client/view/pizzas-online.ejs',
-				controller: 'PizzasController'
-			})
-			.when("/cart",{
-				templateUrl:'client/view/cart.ejs'
-
-			})
-			.when("/checkout",{
-				templateUrl:'client/view/checkout.ejs'
-			})
-			.when("/contact-us",{
-				templateUrl:'client/view/contact-us.ejs'
-			})
-			.when("/login",{
-				templateUrl:'client/view/login.ejs'
-			})
-			.when("/product-details",{
-				templateUrl:'client/view/product-details.ejs',
-				controller: 'PizzasController'
-			})
-			.when("/404",{
-				templateUrl:'client/view/404.ejs'
-			})
-
-
-			.otherwise({
-        		redirectTo: "/"
-    		});
+	app1.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
 
     	$stateProvider
-    	/* .state('home', {
-		    url: '/',
-		    templateUrl: 'client/view/pizzas-online.ejs',
-		    controller: 'PizzasController'
-		  })
-		  .state('cart', {
-		    url: '/cart',
-		    templateUrl: 'client/view/cart.ejs',
-		    //controller: 'PizzasController'
-		  })
-		  .state('checkout', {
-		    url: '/checkout',
-		    templateUrl: 'client/view/checkout.ejs',
-		    //controller: 'PizzasController'
-		  })
-		  .state('product-details', {
-		    url: '/product-details',
-		    templateUrl: 'client/view/product-details.ejs',
-		    controller: 'PizzasController'
-		  })*/
-		  .state('outside.login', {
+
+		  .state('outside', {
+    		url: '/outside',
+    		abstract: false,
+    		templateUrl: 'client/view/pizzas-online.ejs',
+    		controller: 'PizzasController'
+ 			 })
+		  .state('login', {
 		    url: '/login',
 		    templateUrl: 'client/view/login.ejs',
 		    controller: 'LoginCtrl'
 		  })
-		  .state('outside.register', {
+		  .state('register', {
 		    url: '/register',
 		    templateUrl: 'client/view/register.ejs',
 		    controller: 'RegisterCtrl'
@@ -97,9 +54,30 @@ $(document).ready(function(){
 		    url: '/inside',
 		    templateUrl: 'client/view/inside.ejs',
 		    controller: 'InsideCtrl'
-		  });
+		  })
+		  .state('404', {
+		    url: '/404',
+		    templateUrl: 'client/view/404.ejs'
+		  })
+		  .state('checkout', {
+		    url: '/checkout',
+		    templateUrl: 'client/view/checkout.ejs'
+		  })
+		  .state('contact-us', {
+		    url: '/contact-us',
+		    templateUrl: 'client/view/contact-us.ejs'
+		  })
+		  .state('product-details', {
+		    url: '/product-details',
+		    templateUrl: 'client/view/product-details.ejs',
+		    controller: 'PizzasController'
+		  })
+		  .state('cart', {
+    		url: '/cart',
+    		templateUrl: 'client/view/cart.ejs'
+ 			 });
 		 
-		//$urlRouterProvider.otherwise('/outside/login');
+		$urlRouterProvider.otherwise('/outside');
 		
 	}])
 
@@ -108,9 +86,9 @@ $(document).ready(function(){
 	  $rootScope.$on('$stateChangeStart', function (event,next, nextParams, fromState) {
 	    if (!AuthService.isAuthenticated()) {
 	      console.log(next.name);
-	      if (next.name !== 'outside.login' && next.name !== 'outside.register') {
+	      if (next.name !== 'login' && next.name !== 'register') {
 	        event.preventDefault();
-	        $state.go('outside.login');
+	        $state.go('login');
 	      }
 	    }
 	  });
