@@ -1,1 +1,16 @@
-<h3> hola esto es inside</h3>
+
+    <h1 class="title">Member area</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="logout()">Logout</button>
+    </div>
+    <div class="card">
+      <div class="item item-text-wrap">
+        {{memberinfo}}
+      </div>
+    </div>
+    <button class="button button-full button-assertive" ng-click="destroySession()">
+      Destroy token
+    </button>
+    <button class="button button-full button-balanced" ng-click="getInfo()">
+      Get Memberinfo
+    </button>
