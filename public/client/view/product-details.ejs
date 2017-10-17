@@ -62,18 +62,19 @@
 						</div>
 
 					</div>
-					<div class="col-sm-7" ng-repeat="producto in pizzas | limitTo: 1">
+					
+					<div class="col-sm-7"  >
 						<div class="product-information"><!--/product-information-->
 							<img src="images/product-details/new.jpg" class="newarrival" alt="" />
-							<h2>{{producto.nombre}}</h2>
-							<p>Web ID: {{producto.id}}</p>
+							<h2>{{product.nombre}}</h2>
+							<p>Web ID: {{$stateParams.id}}</p>
 							<img src="images/product-details/rating.png" alt="" />
 							<span>
-								<span>US ${{producto.price}}</span>
+								<span>US ${{product.price}}</span>
 								<label>Quantity:</label>
 								<input type="text" value="3" />
 								<button type="button" class="btn btn-fefault cart">
-									<i class="fa fa-shopping-cart"></i>
+									<i class="fa fa-shopping-cart" ></i>
 									Add to cart
 								</button>
 							</span>

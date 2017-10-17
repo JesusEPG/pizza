@@ -8,13 +8,13 @@
 							<img ng-src="{{producto.img}}" alt="" />
 							<h2 > {{producto.nombre}} </h2>
 							<p ng-repeat="ing in producto.ing"> {{ing}} </p>
-							<a href="#!cart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+							<a ui-sref="product-details({id: producto._id})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 						</div>
 						<div class="product-overlay">
 							<div class="overlay-content">
 								<h2>{{producto.price}}</h2>
 								<p>{{producto.nombre}}</p>
-								<a href="#!cart" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+								<a ui-sref="product-details({id: producto._id})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart" ></i>Ver producto</a>
 							</div>
 						</div>
 				</div>

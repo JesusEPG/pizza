@@ -27,7 +27,8 @@ $(document).ready(function(){
 		'pizzasOn.directives',
 		'PizzaService',
 		'Constants',
-		"ui.router"
+		"ui.router",
+		'ng-Shop'
 		]);
 
 	app1.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
@@ -47,8 +48,7 @@ $(document).ready(function(){
 		  })
 		  .state('register', {
 		    url: '/register',
-		    templateUrl: 'client/view/register.ejs',
-		    controller: 'RegisterCtrl'
+		    templateUrl: 'client/view/register.ejs'
 		  })
 		  .state('inside', {
 		    url: '/inside',
@@ -68,13 +68,14 @@ $(document).ready(function(){
 		    templateUrl: 'client/view/contact-us.ejs'
 		  })
 		  .state('product-details', {
-		    url: '/product-details',
+		    url: '/product-details/{id}',
 		    templateUrl: 'client/view/product-details.ejs',
-		    controller: 'PizzasController'
-		  })
+		    controller: 'detailController',
+		     })
 		  .state('cart', {
     		url: '/cart',
-    		templateUrl: 'client/view/cart.ejs'
+    		templateUrl: 'client/view/cart.ejs',
+    		controller: 'cartController'
  			 });
 		 
 		$urlRouterProvider.otherwise('/outside');
@@ -93,6 +94,13 @@ $(document).ready(function(){
 	    }
 	  });
 	});
+
+	app1.run(['$rootScope', '$state', '$stateParams',
+    function($rootScope, $state, $stateParams) {
+      $rootScope.$state = $state;
+      $rootScope.$stateParams = $stateParams;
+    }
+    ])
 	
 })();
 
