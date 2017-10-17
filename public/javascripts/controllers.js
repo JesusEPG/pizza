@@ -164,6 +164,16 @@
 
 
 
+      	Pizza.get()
+            .then(function(response) {
+                $scope.pizzas = response.data;
+                $scope.product = _.find($scope.pizzas, {_id: $stateParams.id});
+            }, function errorCallback(response) {
+			    // called asynchronously if an error occurs
+			    // or server returns response with an error status.
+			    console.log(response);
+			  });
+
  	 }]);
   
 	
