@@ -157,8 +157,10 @@
     	function($scope, $stateParams, Pizza) {
       	//$scope.peoples = $scope.peoples[$stateParams.id];
 
-      	$scope.product = _.find($scope.pizzas, {_id: $stateParams.id});
-      	console.log($scope.product);
+      	/*$scope.product = _.find($scope.pizzas, {_id: $stateParams.id});
+      	console.log($scope.product);*/
+      	var product= _.find(Pizza, function(o) { return o._id; });
+      	console.log(product);
 
 
 
