@@ -159,8 +159,6 @@
 
       	/*$scope.product = _.find($scope.pizzas, {_id: $stateParams.id});
       	console.log($scope.product);*/
-      	var product= _.find(Pizza, function(o) { return o._id; });
-      	console.log(product);
 
 
 
