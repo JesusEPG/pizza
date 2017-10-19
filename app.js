@@ -1,5 +1,6 @@
 var express = require('express');
 var socket_io    = require( "socket.io" );
+var clientio  = require('socket.io-client');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -19,6 +20,23 @@ var app = express();
 // Socket.io
 var io           = socket_io();
 app.io           = io;
+var client    = clientio.connect('http://localhost:3013');
+
+io.on('connection', function (socket) {
+  
+    socket.on('validacion', function (data, fn) {
+        console.log('Nombre: '+data.name);
+        console.log('Apellido: '+data.lastname);
+
+        client.emit('banco', data, function (data) {
+          console.log(data.error);
+          console.log(data); // data will be 'woot'
+         
+          fn(data);
+        });
+    });
+
+});
 
 // pass passport for configuration
 require('./config/passport')(passport);
