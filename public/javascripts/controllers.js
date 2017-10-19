@@ -11,8 +11,6 @@
 			    // or server returns response with an error status.
 			    console.log(response);
 			  });
-
-
 	})
 
 	.controller('LoginCtrl', function($scope, AuthService, $state) {
@@ -65,7 +63,17 @@
 	  });
 	})
 
-	.controller("cartController", function($scope, $shop){
+	.controller("cartController", function($scope, $shop, $stateParams, Pizza){
+
+		Pizza.get()
+            .then(function(response) {
+                $scope.pizzas = response.data;
+                $scope.product = _.find($scope.pizzas, {_id: $stateParams.id});
+            }, function errorCallback(response) {
+			    // called asynchronously if an error occurs
+			    // or server returns response with an error status.
+			    console.log(response);
+			  });
 
 		/**
 		* @desc - añade x cantidad de un producto al carrito
@@ -125,42 +133,11 @@
 			$shop.dataPayPal(userDataPayPal());
 		}
 
-		$scope.productosTienda = 
-			[
-				{
-					"id": 1,
-				 	"category": "Detalles",
-				 	"name": "Colorblock Scuba",
-				 	"price": 59, 
-				 	"picture": "images/cart/one.png" 
-				 },
-				 {
-					"id": 2,
-				 	"category": "Detalles",
-				 	"name": "Colorblock Scuba",
-				 	"price": 59, 
-				 	"picture": "images/cart/two.png"
-				 },
-				 {
-					"id": 3,
-				 	"category": "Detalles",
-				 	"name": "Colorblock Scuba",
-				 	"price": 59, 
-				 	"picture": "images/cart/three.png"
-				 }
-			];
-
-		
+				
 	})
 
-  	  .controller('detailController', ['$scope', '$stateParams', 'Pizza',
-    	function($scope, $stateParams, Pizza) {
-      	//$scope.peoples = $scope.peoples[$stateParams.id];
-
-      	/*$scope.product = _.find($scope.pizzas, {_id: $stateParams.id});
-      	console.log($scope.product);*/
-
-
+  	.controller('detailController', ['$scope', '$stateParams','$shop','Pizza',
+    	function($scope, $stateParams, $shop, Pizza) {
 
       	Pizza.get()
             .then(function(response) {
@@ -171,9 +148,56 @@
 			    // or server returns response with an error status.
 			    console.log(response);
 			  });
+        $scope.add = function(producto)
+			 {
+				 //alert(producto.total); return;
+				 var prod = {};
+				 prod.id = producto._id;
+				 prod.price = producto.price;
+				 prod.nombre = producto.nombre;
+				 prod.img = producto.img;
+				 prod.ing = producto.ing;
+				 prod.qty = parseInt(producto.total || 1,10);
+				 $shop.add(prod);
+				 console.log(producto);
+				
+			 }
+ 
+		 /**
+		 * @desc - elimina un producto del carrito por su id
+		 */
+		 $scope.remove = function(id)
+		 	{
+				 if($shop.remove(id))
+				 {
+				 alert("Producto eliminado correctamente");
+				 return;
+				 }
+				 else
+				 {
+				 alert("Ha ocurrido un error eliminando el producto, seguramente porqué no existe");
+				 return;
+		 		}
+		 	}
+		 
+		 /**
+		 * @desc - elimina el contenido del carrito
+		 */
+		 $scope.destroy = function()
+			 {
+				 $shop.destroy();
+			 }
+		 
+		 /**
+		 * @desc - redondea el precio que le pasemos con dos decimales
+		 */
+		 $scope.roundCurrency = function(total)
+			 {
+			 	return total.toFixed(2);
+			 }
+		
+    }]);
 
- 	 }]);
-  
-	
+	 	
 })();
 

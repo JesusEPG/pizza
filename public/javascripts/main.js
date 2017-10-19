@@ -61,7 +61,8 @@ $(document).ready(function(){
 		  })
 		  .state('checkout', {
 		    url: '/checkout',
-		    templateUrl: 'client/view/checkout.ejs'
+		    templateUrl: 'client/view/checkout.ejs',
+		    controller: 'cartController'
 		  })
 		  .state('contact-us', {
 		    url: '/contact-us',
@@ -73,7 +74,7 @@ $(document).ready(function(){
 		    controller: 'detailController',
 		     })
 		  .state('cart', {
-    		url: '/cart',
+    		url: '/cart/{id}',
     		templateUrl: 'client/view/cart.ejs',
     		controller: 'cartController'
  			 });

@@ -8,17 +8,17 @@
 		</div><!--/breadcrums-->
 
 		<div class="step-one">
-			<h2 class="heading">Step1</h2>
+			<h2 class="heading">Paso 1</h2>
 		</div>
 		<div class="checkout-options">
-			<h3>New User</h3>
-			<p>Checkout options</p>
+			<h3>Usuario nuevo</h3>
+			<p>Opciones de pago</p>
 			<ul class="nav">
 				<li>
-					<label><input type="checkbox"> Register Account</label>
+					<label><input type="checkbox"> Registrar Cuenta</label>
 				</li>
 				<li>
-					<label><input type="checkbox"> Guest Checkout</label>
+					<label><input type="checkbox">Checkout como invitado</label>
 				</li>
 				<li>
 					<a href=""><i class="fa fa-times"></i>Cancel</a>
@@ -27,67 +27,50 @@
 		</div><!--/checkout-options-->
 
 		<div class="register-req">
-			<p>Please use Register And Checkout to easily get access to your order history, or use Checkout as Guest</p>
+			<p>Use registro y pago para obtener fácilmente acceso al historial de su pedido, o utilice Checkout como invitado</p>
 		</div><!--/register-req-->
 
 		<div class="shopper-informations">
 			<div class="row">
 				<div class="col-sm-3">
 					<div class="shopper-info">
-						<p>Shopper Information</p>
+						<p>Información del comprador</p>
 						<form>
-							<input type="text" placeholder="Display Name">
-							<input type="text" placeholder="User Name">
-							<input type="password" placeholder="Password">
-							<input type="password" placeholder="Confirm password">
+							<input type="text" placeholder="Nombre">
+							<input type="text" placeholder="Usuario">
+							<input type="password" placeholder="Contraseña">
+							<input type="password" placeholder="Confirmar Contraseña">
 						</form>
-						<a class="btn btn-primary" href="">Get Quotes</a>
-						<a class="btn btn-primary" href="">Continue</a>
+						<a class="btn btn-primary" href="">Ir</a>
+						<a class="btn btn-primary" href="">Continuar</a>
 					</div>
 				</div>
 				<div class="col-sm-5 clearfix">
 					<div class="bill-to">
-						<p>Bill To</p>
+						<p>Cobrar a</p>
 						<div class="form-one">
 							<form>
-								<input type="text" placeholder="Company Name">
-								<input type="text" placeholder="Email*">
-								<input type="text" placeholder="Title">
-								<input type="text" placeholder="First Name *">
-								<input type="text" placeholder="Middle Name">
-								<input type="text" placeholder="Last Name *">
-								<input type="text" placeholder="Address 1 *">
-								<input type="text" placeholder="Address 2">
+								<input type="text" placeholder="Tipo de tarjeta">
+								<input type="text" placeholder="Correo*">
+								<input type="text" placeholder="Titulo">
+								<input type="text" placeholder="Primer nombre *">
+								<input type="text" placeholder="Segundo nombre">
+								<input type="text" placeholder="Apellido *">
+								<input type="text" placeholder="Dirección 1 *">
+								<input type="text" placeholder="Dirección 2">
 							</form>
 						</div>
 						<div class="form-two">
 							<form>
-								<input type="text" placeholder="Zip / Postal Code *">
+								<input type="text" placeholder="Zip / Zona postal*">
 								<select>
-									<option>-- Country --</option>
+									<option>-- País-</option>
 									<option>United States</option>
-									<option>Bangladesh</option>
-									<option>UK</option>
-									<option>India</option>
-									<option>Pakistan</option>
-									<option>Ucrane</option>
-									<option>Canada</option>
-									<option>Dubai</option>
+									<option>Venezuela</option>									
 								</select>
-								<select>
-									<option>-- State / Province / Region --</option>
-									<option>United States</option>
-									<option>Bangladesh</option>
-									<option>UK</option>
-									<option>India</option>
-									<option>Pakistan</option>
-									<option>Ucrane</option>
-									<option>Canada</option>
-									<option>Dubai</option>
-								</select>
-								<input type="password" placeholder="Confirm password">
-								<input type="text" placeholder="Phone *">
-								<input type="text" placeholder="Mobile Phone">
+								<input type="password" placeholder="Confirmar Contraseña">
+								<input type="text" placeholder="Teléfono*">
+								<input type="text" placeholder="Celular">
 								<input type="text" placeholder="Fax">
 							</form>
 						</div>
@@ -95,40 +78,40 @@
 				</div>
 				<div class="col-sm-4">
 					<div class="order-message">
-						<p>Shipping Order</p>
-						<textarea name="message"  placeholder="Notes about your order, Special Notes for Delivery" rows="16"></textarea>
-						<label><input type="checkbox"> Shipping to bill address</label>
+						<p>Orden de envío</p>
+						<textarea name="message"  placeholder="Notas sobre su pedido, notas especiales para entrega" rows="16"></textarea>
+						<label><input type="checkbox"> Envío a la dirección de facturación</label>
 					</div>	
 				</div>					
 			</div>
 		</div>
 		<div class="review-payment">
-			<h2>Review & Payment</h2>
+			<h2>Revisión & Pago</h2>
 		</div>
 
-		<div class="table-responsive cart_info">
+		<div class="table-responsive cart_info" >
 			<table class="table table-condensed">
 				<thead>
 					<tr class="cart_menu">
-						<td class="image">Item</td>
-						<td class="description"></td>
-						<td class="price">Price</td>
-						<td class="quantity">Quantity</td>
+						<td class="image">Producto</td>
+						<td class="description">Descripción</td>
+						<td class="price">Precio</td>
+						<td class="quantity">Cantidad</td>
 						<td class="total">Total</td>
 						<td></td>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
+					<tr ng-repeat="prod in udpShopContent">
 						<td class="cart_product">
-							<a href=""><img src="images/cart/one.png" alt=""></a>
+							<a href=""><img src="{{prod.img}}" alt=""></a>
 						</td>
 						<td class="cart_description">
-							<h4><a href="">Colorblock Scuba</a></h4>
-							<p>Web ID: 1089772</p>
+							<h4><a href="">{{prod.nombre}}</a></h4>
+							<p>Web ID: {{prod.id}}</p>
 						</td>
 						<td class="cart_price">
-							<p>$59</p>
+							<p>${{prod.price}}</p>
 						</td>
 						<td class="cart_quantity">
 							<div class="cart_quantity_button">
@@ -138,86 +121,19 @@
 							</div>
 						</td>
 						<td class="cart_total">
-							<p class="cart_total_price">$59</p>
+							<p class="cart_total_price">${{roundCurrency(prod.price * prod.qty)}}</p>
 						</td>
 						<td class="cart_delete">
-							<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-						</td>
-					</tr>
-
-					<tr>
-						<td class="cart_product">
-							<a href=""><img src="images/cart/two.png" alt=""></a>
-						</td>
-						<td class="cart_description">
-							<h4><a href="">Colorblock Scuba</a></h4>
-							<p>Web ID: 1089772</p>
-						</td>
-						<td class="cart_price">
-							<p>$59</p>
-						</td>
-						<td class="cart_quantity">
-							<div class="cart_quantity_button">
-								<a class="cart_quantity_up" href=""> + </a>
-								<input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-								<a class="cart_quantity_down" href=""> - </a>
-							</div>
-						</td>
-						<td class="cart_total">
-							<p class="cart_total_price">$59</p>
-						</td>
-						<td class="cart_delete">
-							<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-						</td>
+							<a class="cart_quantity_delete" href=""><i class="fa fa-times" ng-click="remove(prod.id)"></i></a>
+						</td>						
 					</tr>
 					<tr>
-						<td class="cart_product">
-							<a href=""><img src="images/cart/three.png" alt=""></a>
-						</td>
-						<td class="cart_description">
-							<h4><a href="">Colorblock Scuba</a></h4>
-							<p>Web ID: 1089772</p>
-						</td>
-						<td class="cart_price">
-							<p>$59</p>
-						</td>
-						<td class="cart_quantity">
-							<div class="cart_quantity_button">
-								<a class="cart_quantity_up" href=""> + </a>
-								<input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-								<a class="cart_quantity_down" href=""> - </a>
-							</div>
-						</td>
-						<td class="cart_total">
-							<p class="cart_total_price">$59</p>
-						</td>
-						<td class="cart_delete">
-							<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="4">&nbsp;</td>
-						<td colspan="2">
-							<table class="table table-condensed total-result">
-								<tr>
-									<td>Cart Sub Total</td>
-									<td>$59</td>
-								</tr>
-								<tr>
-									<td>Exo Tax</td>
-									<td>$2</td>
-								</tr>
-								<tr class="shipping-cost">
-									<td>Shipping Cost</td>
-									<td>Free</td>										
-								</tr>
-								<tr>
-									<td>Total</td>
-									<td><span>$61</span></td>
-								</tr>
-							</table>
-						</td>
-					</tr>
+     					<td colspan="6">Número total de artículos: {{ udpShopTotalProducts }}</td>
+     				<tr>
+     				<tr>
+     					<td colspan="6">Precio total del carrito: {{ roundCurrency(udpShopTotalPrice) }}</td>
+     				<tr>
+					
 				</tbody>
 			</table>
 		</div>

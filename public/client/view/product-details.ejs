@@ -28,7 +28,7 @@
 				<div class="product-details"><!--product-details-->
 					<div class="col-sm-5">
 						<div class="view-product">
-							<img src="images/product-details/1.jpg" alt="" />
+							<img ng-src="{{product.img}}" alt="" />
 						</div>
 						<div id="similar-product" class="carousel slide" data-ride="carousel">
 							
@@ -63,17 +63,24 @@
 
 					</div>
 					
-					<div class="col-sm-7"  >
+					<div class="col-sm-7" >
 						<div class="product-information"><!--/product-information-->
 							<img src="images/product-details/new.jpg" class="newarrival" alt="" />
 							<h2>{{product.nombre}}</h2>
-							<p>Web ID: {{$stateParams.id}}</p>
+							<p>Web ID: {{product._id}}</p>
+							<p ng-repeat="ingprducto in product.ing ">{{ingprducto}}</p>
 							<img src="images/product-details/rating.png" alt="" />
 							<span>
 								<span>US ${{product.price}}</span>
 								<label>Quantity:</label>
-								<input type="text" value="3" />
-								<button type="button" class="btn btn-fefault cart">
+								<input ng-init="product.total=1" ng-model="product.total" type="text" value="3"/>
+								 <select ng-init="product.total=1" ng-model="product.total">
+									 <option value="1">1</option>
+									 <option value="2">2</option>
+									 <option value="3">3</option>
+									 <option value="4">4</option>
+									 </select>
+								<button ng-click="add(product)"type="button" class="btn btn-fefault cart">
 									<i class="fa fa-shopping-cart" ></i>
 									Add to cart
 								</button>
@@ -90,3 +97,61 @@
 		</div>
 	</div>
 </section>
+<section id="cart_items">
+	<div class="container">
+		<div class="breadcrumbs">
+			<ol class="breadcrumb">
+			  <li><a href="#">Home</a></li>
+			  <li class="active">Shopping Cart</li>
+			</ol>
+		</div>
+		<div class="table-responsive cart_info">
+			<table class="table table-condensed">
+				<thead>
+					<tr class="cart_menu">
+						<td class="image">Artículo</td>
+						<td class="description">Description</td>
+						<td class="price">Precio</td>
+						<td class="quantity">Cantidad</td>
+						<td class="total">Total</td>
+						<td></td>
+					</tr>
+				</thead>
+				<tbody >
+					<tr ng-repeat="prod in udpShopContent">
+						<td class="cart_product">
+							<a href=""><img src="{{prod.img}}" alt=""></a>
+						</td>
+						<td class="cart_description">
+							<h4><a href="">{{prod.nombre}}</a></h4>
+							<p>Web ID: {{prod.id}}</p>
+							<p ng-repeat="ingprducto1 in prod.ing ">{{ingprducto1}}</p>
+						</td>
+						<td class="cart_price">
+							<p>{{roundCurrency(prod.price)}}</p>
+						</td>
+						<td class="cart_quantity">
+							<div class="cart_quantity_button">
+								<a class="cart_quantity_up" href=""> + </a>
+								<input class="cart_quantity_input" type="text" name="quantity" value="{{prod.qty}}" autocomplete="off" size="2">
+								<a class="cart_quantity_down" href=""> - </a>
+							</div>
+						</td>
+						<td class="cart_total">
+							<p class="cart_total_price">{{roundCurrency(prod.price * prod.qty)}}</p>
+						</td>
+						<td class="cart_delete">
+							<a class="cart_quantity_delete" href=""><i class="fa fa-times" ng-click="remove(prod.id)"></i></a>
+						</td>
+					</tr>
+					<tr>
+     					<td colspan="6">Número total de artículos: {{ udpShopTotalProducts }}</td>
+     				<tr>
+     				<tr>
+     					<td colspan="6">Precio total del carrito: {{ roundCurrency(udpShopTotalPrice) }}</td>
+     				<tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</section> <!--/#cart_items-->

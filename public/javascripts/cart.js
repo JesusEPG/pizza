@@ -34,10 +34,7 @@ shop.factory('$shop', ['$rootScope', function ($rootScope)
 			{
 				throw new Error("Los campos qty, price y id son necesarios");
 			}
-			if(isNaN(product.qty) || isNaN(product.price) || isNaN(product.id))
-			{
-				throw new Error("Los campos qty, price y id deben ser númericos");
-			}
+
 			if(product.qty <= 0)
 			{
 				throw new Error("La cantidad añadida debe ser mayor de 0");
