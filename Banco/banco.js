@@ -1,23 +1,45 @@
+var cryptico = require('cryptico-js');
+
+// Frase secreta para crear repetidamente la llave RSA
+
+var PassPhrase = "Pizzas are awesome"; 
+
+// Tamaño de la llave RSA, en bits. 
+var Bits = 1024;
+
+var RSAkey = cryptico.generateRSAKey(PassPhrase, Bits);
+
+var stringLlavePublica = cryptico.publicKeyString(RSAkey); 
+
 var io = require('socket.io').listen(3013);
 
 var nano = require('nano')('http://localhost:5984');
 
 var transacciones;
 
-// clean up the database we created previously
+// Se elimina la bdd en caso de existir
 nano.db.destroy('transacciones', function() {
 	console.log('Se eliminó la bdd existente');
-  	// create a new database
+  	// crea una nueva bdd
   	nano.db.create('transacciones', function() {
   		
   		console.log('Se creó la bdd');
-	    // specify the database we are going to use
+	    // Se especifica la bdd a usar
 	    transacciones = nano.use('transacciones');
 
 	    io.sockets.on('connection', function (socket) {
 		  console.log('Llegó al banco');
+
+		  //Se comparte la clave pública al conectarse con el servidor de la página
+		  socket.on('clave', function (name, fn) {
+		    fn(stringLlavePublica);
+		  });
+
 		  socket.on('banco', function (data, fn) {
-		    console.log('Nombre: '+data.name);
+		    console.log('Nombre cifrado: '+data.name);
+		    var resultado = cryptico.decrypt(data.name, RSAkey);
+		    data.name = resultado.plaintext;
+		    console.log('Nombre normal: '+data.name);
 		    console.log('Apellido: '+data.lastname);
 		    var aprobado = aleatorio(1,9);
 		    if(aprobado < 4){

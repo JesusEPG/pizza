@@ -11,21 +11,33 @@ var config      = require('./config/db'); // get db config file
 var index = require('./routes/index');
 var users = require('./routes/users');
 var passport  = require('passport');
+var cryptico = require('cryptico-js');
 
 
 var Pizza = require('./app/models/pizzas');
 
 var app = express();
 
+var stringLlavePublica;
+
 // Socket.io
 var io           = socket_io();
 app.io           = io;
 var client    = clientio.connect('http://localhost:3013');
 
+client.emit('clave','tobi', function (data) {
+    console.log('Sirvió!!!!!');
+    console.log(data); // data will be 'woot'
+    stringLlavePublica=data;
+});
+
 io.on('connection', function (socket) {
   
     socket.on('validacion', function (data, fn) {
-        console.log('Nombre: '+data.name);
+        console.log('Nombre normal: '+data.name);
+        var resultado = cryptico.encrypt(data.name, stringLlavePublica);
+        data.name = resultado.cipher;
+        console.log('Nombre cifrado: '+data.name);
         console.log('Apellido: '+data.lastname);
 
         client.emit('banco', data, function (data) {
@@ -35,7 +47,6 @@ io.on('connection', function (socket) {
           fn(data);
         });
     });
-
 });
 
 // pass passport for configuration
