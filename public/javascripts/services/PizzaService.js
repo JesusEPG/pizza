@@ -106,6 +106,24 @@ angular.module('PizzaService', [])
         }
       };
     })
+
+    .factory('socket', function($rootScope) {
+
+        var socket = io.connect('http://localhost:3000');
+
+        return {
+            emit: function(eventName, data, callback) {
+                socket.emit(eventName, data, function() {
+                    var args = arguments;
+                    $rootScope.$apply(function() {
+                        if (callback) {
+                            callback.apply(socket, args);
+                        }
+                    });
+                });
+            }
+        };
+    })
  
     .config(function ($httpProvider) {
       $httpProvider.interceptors.push('AuthInterceptor');

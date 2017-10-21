@@ -35,12 +35,12 @@
 				<div class="col-sm-3">
 					<div class="shopper-info">
 						<p>Información del comprador</p>
-						<form id="checkout-form" action="/" method="get">
-							<input type="text" placeholder="Nombre" id="name">
+						<form name="myForm" ng-submit="submit(myForm)" novalidate>
+						    <input type="text" placeholder="Nombre" id="name">
 							<input type="text" placeholder="Usuario">
 							<input type="password" placeholder="Contraseña">
 							<input type="password" placeholder="Confirmar Contraseña">
-							<button type="submit" class="btn btn-primary">Comprar</button>
+						    <button type="submit" class="btn btn-primary" ng-disabled="isDisabled"> Comprar</button>
 						</form>
 						<a class="btn btn-primary" href="">Ir</a>
 						<a class="btn btn-primary" href="">Continuar</a>
@@ -150,41 +150,5 @@
 				</span>
 			</div>
 	</div>
-	<script>
-
-        var socket = io.connect('http://localhost:3000');
-
-        var $form = $('#checkout-form');
-
-        $form.submit(function (event) {
-            //$('#charge-error').addClass('hidden');
-            $form.find('button').prop('disabled', true); //para evitar que el boton de comprar se le pueda seguir haciendo click mientras se procesa
-            
-            //se debe sustituir tobi por los datos del formulario
-            socket.emit('validacion', {"name": "jesus", "lastname": "pernia"}, function (data) {
-              console.log(data.persona); // data will be 'woot'
-              if (data.error) { // Problem!
-
-                    // Show the errors on the form
-                    //$('#charge-error').text(data.message);
-                    //$('#charge-error').removeClass('hidden');
-                    console.log('error');
-                    alert(data.message);
-                    $form.find('button').prop('disabled', false); // Vuelve a habilitar el boton de comprar, para que se arreglen los errores
-
-                } else { 
-
-                    //Aqui se hace las cosas cuando aprueba el banco
-
-                    console.log('No hubo error!');
-
-                    // Submit the form:
-                    $form.get(0).submit();
-
-                }
-            });
-            return false;
-        });
-    </script>
 </section> <!--/#cart_items-->
 

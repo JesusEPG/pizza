@@ -63,8 +63,10 @@
 	  });
 	})
 
-	.controller("cartController", function($scope, $shop, $stateParams, Pizza){
+	.controller("cartController", function($scope, $state, $shop, $http, $stateParams, Pizza, socket){
 
+		$scope.isDisabled = false;
+		
 		Pizza.get()
             .then(function(response) {
                 $scope.pizzas = response.data;
@@ -133,6 +135,33 @@
 			$shop.dataPayPal(userDataPayPal());
 		}
 
+		$scope.submit = function(htmlForm) {
+	    
+	    $scope.isDisabled = true;
+	    //se debe sustituir tobi por los datos del formulario
+	    socket.emit('validacion', {"name": "jesus", "lastname": "pernia"}, function (data) {
+	        console.log(data.persona); // data will be 'woot'
+	        if (data.error) { // Problem!
+	            // Show the errors on the form
+	   
+	            console.log('error');
+	            alert(data.message);
+	            $scope.isDisabled = false; // Vuelve a habilitar el boton de comprar, para que se arreglen los errores
+
+	        } else { 
+
+	            //Aqui se hace las cosas cuando aprueba el banco
+
+	            console.log('No hubo error!');
+
+	            // Submit the form:
+	            //return $http.get('/#!/outside');
+	            $state.go('outside');
+
+	        }
+	    });
+
+	}
 				
 	})
 
