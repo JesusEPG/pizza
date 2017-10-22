@@ -1,6 +1,10 @@
 // grab the nerd model we just created
+var mongoose = require('mongoose');
+//var Schema = mongoose.Schema;
+
 var Pizza = require('./models/pizzas');
 var User = require('./models/user');
+var Order = require('./models/order');
 var passport  = require('passport');
 var jwt = require('jwt-simple');
 var config = require('../config/db'); // get db config file
@@ -73,14 +77,21 @@ var config = require('../config/db'); // get db config file
 
         app.post('/checkout', function (req, res, next){
 
-                  console.log('Nombre2 ' +req.body.nombre);
+                  //var cart = req.body.cart;
 
-                  res.json({success: true, msj: 'Probando'});
-                  //var cart = new Cart(req.cart);
-                  //crear la orden con los datos que se reciben
-                  //eliminar carrito en cliente
-                  //res.json success true
+                  var order = new Order({
+                    //user: req.user,
+                    cart: req.body.cart,
+                    address: req.body.address,
+                    name: req.body.name
+                  });
 
+                  order.save(function(err, result){
+                    if (err) {
+                        return res.send();
+                    }
+                    res.json({success: true, msj: 'Se guardó la orden en bdd'});
+                  });
 
         });
         

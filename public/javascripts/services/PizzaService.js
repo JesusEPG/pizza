@@ -6,7 +6,6 @@ angular.module('PizzaService', [])
 
     return {
 
-        // call to get all nerds
         get : function() {
             console.log('Hola Servicio');
             return $http.get('/api/pizzas');
@@ -96,28 +95,13 @@ angular.module('PizzaService', [])
       };
     })
     .service('CheckoutService', function($q, $http) {
-      /*return {
-          checkout: 
-            $q(function(resolve, reject) {
-                $http.post('/checkout')
-                  .then(function(result) {
-                    if (result.data.success) {
-                      console.log(result.data.msj);
-                      resolve(result.data.msg);
-                    } else {
-                      reject(result.data.msg);
-                    }
-                  })
-                })
-      }*/
-
+         
         return {
 
-        // call to get all nerds
-        checkout : function(data) {
-            console.log('Hola Servicio Checkout');
-            return $http.post('/checkout', data);
-        }
+          checkout : function(data) {
+              console.log('Hola Servicio Checkout');
+              return $http.post('/checkout', data);
+          }
     } 
     })
  

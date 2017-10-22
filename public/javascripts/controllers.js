@@ -138,12 +138,11 @@
 		$scope.submit = function(htmlForm) {
 	    
 	    $scope.isDisabled = true;
-	    //se debe sustituir tobi por los datos del formulario
+	    
+	    //se debe sustituir por los datos del formulario
 	    socket.emit('validacion', {"name": "jesus", "lastname": "pernia"}, function (data) {
-	        console.log(data.persona); // data will be 'woot'
-	        if (data.error) { // Problem!
-	            // Show the errors on the form
-	   
+	        console.log(data.persona);
+	        if (data.error) { 
 	            console.log('error');
 	            alert(data.message);
 	            $scope.isDisabled = false; // Vuelve a habilitar el boton de comprar, para que se arreglen los errores
@@ -154,19 +153,26 @@
 
 	            console.log('No hubo error!');
 
-	            CheckoutService.checkout({'nombre': 'jesus2', 'apellido': 'pernia2'})
+	            //crear un objeto {} carrito y que se le pase al post como parametro!!!!!!
+
+	            data = {
+	            	name: 'jesus5',
+	            	user: 2222,
+                    cart: {producto: 5, cantidad: 55},
+                    address: 'aceitunos'
+	            };
+
+	            CheckoutService.checkout(data)
 	            	.then(function(response) {
 		                console.log(response.data);
+		                //$shop.destroy();
+		                alert('Su orden ha sido procesada!');
 		                $state.go('outside');
 		            }, function errorCallback(response) {
 					    // called asynchronously if an error occurs
 					    // or server returns response with an error status.
 					    console.log(response);
 					  });
-
-	            // Submit the form:
-	            //return $http.get('/#!/outside');
-	            //$state.go('outside');
 
 	        }
 	    });
