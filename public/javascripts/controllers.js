@@ -63,7 +63,7 @@
 	  });
 	})
 
-	.controller("cartController", function($scope, $state, $shop, $http, $stateParams, Pizza, socket){
+	.controller("cartController", function($scope, $state, $shop, $http, $stateParams, Pizza, socket, CheckoutService){
 
 		$scope.isDisabled = false;
 		
@@ -154,9 +154,19 @@
 
 	            console.log('No hubo error!');
 
+	            CheckoutService.checkout({'nombre': 'jesus2', 'apellido': 'pernia2'})
+	            	.then(function(response) {
+		                console.log(response.data);
+		                $state.go('outside');
+		            }, function errorCallback(response) {
+					    // called asynchronously if an error occurs
+					    // or server returns response with an error status.
+					    console.log(response);
+					  });
+
 	            // Submit the form:
 	            //return $http.get('/#!/outside');
-	            $state.go('outside');
+	            //$state.go('outside');
 
 	        }
 	    });

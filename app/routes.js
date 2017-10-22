@@ -21,7 +21,7 @@ var config = require('../config/db'); // get db config file
                 if (err)
                     res.send(err);
 
-                console.log(pizzas);
+                //console.log(pizzas);
                 res.json(pizzas); // return all nerds in JSON format
             });
         });
@@ -70,6 +70,19 @@ var config = require('../config/db'); // get db config file
                     }
                   });
                 });
+
+        app.post('/checkout', function (req, res, next){
+
+                  console.log('Nombre2 ' +req.body.nombre);
+
+                  res.json({success: true, msj: 'Probando'});
+                  //var cart = new Cart(req.cart);
+                  //crear la orden con los datos que se reciben
+                  //eliminar carrito en cliente
+                  //res.json success true
+
+
+        });
         
         // route to a restricted info (GET http://localhost:3000/api/memberinfo)
         app.get('/api/memberinfo', passport.authenticate('jwt', { session: false}), function(req, res) {

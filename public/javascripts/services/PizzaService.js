@@ -95,6 +95,31 @@ angular.module('PizzaService', [])
         isAuthenticated: function() {return isAuthenticated;},
       };
     })
+    .service('CheckoutService', function($q, $http) {
+      /*return {
+          checkout: 
+            $q(function(resolve, reject) {
+                $http.post('/checkout')
+                  .then(function(result) {
+                    if (result.data.success) {
+                      console.log(result.data.msj);
+                      resolve(result.data.msg);
+                    } else {
+                      reject(result.data.msg);
+                    }
+                  })
+                })
+      }*/
+
+        return {
+
+        // call to get all nerds
+        checkout : function(data) {
+            console.log('Hola Servicio Checkout');
+            return $http.post('/checkout', data);
+        }
+    } 
+    })
  
     .factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS) {
       return {
