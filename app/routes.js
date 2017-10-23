@@ -75,7 +75,7 @@ var config = require('../config/db'); // get db config file
                   });
                 });
 
-        app.post('/checkout', function (req, res, next){
+        /*app.post('/checkout', function (req, res, next){
 
                   //var cart = req.body.cart;
 
@@ -93,8 +93,66 @@ var config = require('../config/db'); // get db config file
                     res.json({success: true, msj: 'Se guardó la orden en bdd'});
                   });
 
+        });*/
+
+
+        app.post('/checkout', passport.authenticate('jwt', { session: false}), function(req, res) {
+                  var token = getToken(req.headers);
+                  if (token) {
+                    var decoded = jwt.decode(token, config.secret);
+                    User.findOne({
+                      name: decoded.name
+                    }, function(err, user) {
+                        if (err) throw err;
+                 
+                        if (!user) {
+                          return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
+                        } else {
+                          //var cart = req.body.cart;
+
+                          var order = new Order({
+                            user: user,
+                            cart: req.body.cart,
+                            address: req.body.address,
+                            name: req.body.name
+                          });
+
+                          order.save(function(err, result){
+                            if (err) {
+                                return res.send();
+                            }
+                            res.json({success: true, msj: 'Se guardó la orden en bdd'});
+                          });
+                          //res.json({success: true, msg: 'Welcome in the member area ' + user._id + '!'});
+                        }
+                    });
+                  } else {
+                    return res.status(403).send({success: false, msg: 'No token provided.'});
+                  }
         });
         
+
+        // route to a restricted info (GET http://localhost:3000/api/memberinfo)
+        app.get('/checkout', passport.authenticate('jwt', { session: false}), function(req, res) {
+                  var token = getToken(req.headers);
+                  if (token) {
+                    var decoded = jwt.decode(token, config.secret);
+                    User.findOne({
+                      name: decoded.name
+                    }, function(err, user) {
+                        if (err) throw err;
+                 
+                        if (!user) {
+                          return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
+                        } else {
+                          res.json({success: true, msg: 'Welcome in the member area ' + user._id + '!'});
+                        }
+                    });
+                  } else {
+                    return res.status(403).send({success: false, msg: 'No token provided.'});
+                  }
+        });
+
         // route to a restricted info (GET http://localhost:3000/api/memberinfo)
         app.get('/api/memberinfo', passport.authenticate('jwt', { session: false}), function(req, res) {
                   var token = getToken(req.headers);
@@ -114,7 +172,7 @@ var config = require('../config/db'); // get db config file
                   } else {
                     return res.status(403).send({success: false, msg: 'No token provided.'});
                   }
-                });
+        });
                  
                 getToken = function (headers) {
                   if (headers && headers.authorization) {

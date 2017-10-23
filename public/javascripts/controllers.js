@@ -1,7 +1,7 @@
 (function () {
 	angular.module('pizzasOn.controllers', [])
 
-	.controller('PizzasController', function ($scope, Pizza) {
+	.controller('PizzasController', function ($scope, Pizza, $state) {
 		
 		Pizza.get()
             .then(function(response) {
@@ -11,6 +11,21 @@
 			    // or server returns response with an error status.
 			    console.log(response);
 			  });
+	})
+
+	.controller('HeaderController', function ($scope, Pizza, $state) {
+		
+		$scope.checkout = function(){
+        	Pizza.getCheckout()
+            .then(function(response) {
+                $state.go('checkout');
+            }, function errorCallback(response) {
+			    // called asynchronously if an error occurs
+			    // or server returns response with an error status.
+			    console.log(response);
+			    $state.go('login');
+			  });
+        }
 	})
 
 	.controller('LoginCtrl', function($scope, AuthService, $state) {

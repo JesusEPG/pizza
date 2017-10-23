@@ -60,9 +60,10 @@
 					</div>
 					<div class="col-sm-8">
 						<div class="shop-menu pull-right">
-							<ul class="nav navbar-nav">
+							<ul class="nav navbar-nav" ng-controller="HeaderController">
 								<li><a href="#"><i class="fa fa-user" ></i> Account</a></li>
-								<li><a ui-sref="checkout"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+								<!--<li><a ui-sref="checkout"><i class="fa fa-crosshairs"></i> Checkout</a></li>-->
+								<li><a href="javascript:void(0)" ng-click="checkout()"><i class="fa fa-crosshairs"></i> Checkout</a></li>
 								<li><a ui-sref="cart({id: product._id})"><i class="fa fa-shopping-cart"></i> Cart</a></li>
 								<li><a ui-sref="login"><i class="fa fa-lock"></i> Login</a></li>
 							</ul>

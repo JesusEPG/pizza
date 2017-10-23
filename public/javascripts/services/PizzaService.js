@@ -19,6 +19,11 @@ angular.module('PizzaService', [])
         // call to DELETE a pizza
         delete : function(id) {
             return $http.delete('/api/pizzas/' + id);
+        },
+
+        getCheckout: function() {
+            console.log('Hola Servicio Checkout');
+            return $http.get('/checkout');
         }
     }       
 
