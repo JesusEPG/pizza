@@ -36,11 +36,14 @@
 					<div class="shopper-info">
 						<p>Información del comprador</p>
 						<form name="myForm" ng-submit="submit(myForm)" novalidate>
-						    <input type="text" placeholder="Nombre" id="name">
-							<input type="text" placeholder="Usuario">
-							<input type="password" placeholder="Contraseña">
-							<input type="password" placeholder="Confirmar Contraseña">
-						    <button type="submit" class="btn btn-primary" ng-disabled="isDisabled"> Comprar</button>
+						    <input type="text" placeholder="Nombre" ng-model="nombre">
+							<input type="number" placeholder="Número de tarjeta" ng-model="numeroTDC">
+							<input type="text" placeholder="Nombre del titular de la TDC" ng-model="nombreTDC">
+							<input type="number" placeholder="Números de seguridad" ng-model="numerosSeguridad">
+							<input type="date" placeholder="Fecha de vencimiento de la TDC" ng-model="fechaVencimiento">
+							<input type="text" placeholder="Email" ng-model="email">
+							<input type="text" placeholder="Dirección" ng-model="direccion">
+						    <button type="submit" class="btn btn-primary" ng-disabled="isDisabled">Comprar</button>
 						</form>
 						<a class="btn btn-primary" href="">Ir</a>
 						<a class="btn btn-primary" href="">Continuar</a>

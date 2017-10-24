@@ -34,12 +34,13 @@ client.emit('clave','tobi', function (data) {
 io.on('connection', function (socket) {
   
     socket.on('validacion', function (data, fn) {
-        console.log('Nombre normal: '+data.name);
-        var resultado = cryptico.encrypt(data.name, stringLlavePublica);
-        data.name = resultado.cipher;
-        console.log('Nombre cifrado: '+data.name);
-        console.log('Apellido: '+data.lastname);
-
+        console.log('#tdc normal: '+data.numeroTDC);
+        var numeroString = data.numeroTDC.toString();
+        console.log('tdc string: '+ numeroString);
+        var resultado = cryptico.encrypt(numeroString, stringLlavePublica);
+        data.numeroTDC = resultado.cipher;
+        console.log('#tdc cifrado: '+data.numeroTDC);
+        
         client.emit('banco', data, function (data) {
           console.log(data.error);
           console.log(data); // data will be 'woot'

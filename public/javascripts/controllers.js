@@ -78,7 +78,7 @@
 	  });
 	})
 
-	.controller("cartController", function($scope, $state, $shop, $http, $stateParams, Pizza, socket, CheckoutService){
+	.controller("cartController", function($scope, $state, $shop, $http, $stateParams, Pizza, socket, CheckoutService, $rootScope){
 
 		$scope.isDisabled = false;
 		
@@ -153,34 +153,40 @@
 		$scope.submit = function(htmlForm) {
 	    
 	    $scope.isDisabled = true;
-	    
+
+		var tdcData = {
+			"name": $scope.nombre,
+			"numeroTDC": $scope.numeroTDC, 
+			"nombreTDC": $scope.nombreTDC, 
+			"numerosSeguridad": $scope.numerosSeguridad, 
+			"fechaVencimiento": $scope.fechaVencimiento
+		}
+		
+
 	    //se debe sustituir por los datos del formulario
-	    socket.emit('validacion', {"name": "jesus", "lastname": "pernia"}, function (data) {
-	        console.log(data.persona);
+	    socket.emit('validacion', tdcData, function (data) {
 	        if (data.error) { 
-	            console.log('error');
 	            alert(data.message);
 	            $scope.isDisabled = false; // Vuelve a habilitar el boton de comprar, para que se arreglen los errores
 
 	        } else { 
-
-	            //Aqui se hace las cosas cuando aprueba el banco
-
-	            console.log('No hubo error!');
-
-	            //crear un objeto {} carrito y que se le pase al post como parametro!!!!!!
+         
+            	var cart = {
+				productos: $rootScope.udpShopContent,
+				precioTotal: $rootScope.udpShopTotalPrice,
+				cantidadProductos: $rootScope.udpShopTotalProducts
+			}
 
 	            data = {
-	            	name: 'jesus5',
-	            	user: 2222,
-                    cart: {producto: 5, cantidad: 55},
-                    address: 'aceitunos'
+	            	name: $scope.nombre,
+	            	cart: cart,
+                    address: $scope.direccion
 	            };
 
 	            CheckoutService.checkout(data)
 	            	.then(function(response) {
 		                console.log(response.data);
-		                //$shop.destroy();
+		                $shop.destroy();
 		                alert('Su orden ha sido procesada!');
 		                $state.go('outside');
 		            }, function errorCallback(response) {

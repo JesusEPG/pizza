@@ -36,42 +36,42 @@ nano.db.destroy('transacciones', function() {
 		  });
 
 		  socket.on('banco', function (data, fn) {
-		    console.log('Nombre cifrado: '+data.name);
-		    var resultado = cryptico.decrypt(data.name, RSAkey);
-		    data.name = resultado.plaintext;
-		    console.log('Nombre normal: '+data.name);
-		    console.log('Apellido: '+data.lastname);
+		    console.log('#tdc cifrado: '+data.numeroTDC);
+		    var resultado = cryptico.decrypt(data.numeroTDC, RSAkey);
+		    data.numeroTDC = resultado.plaintext;
+		    console.log('#tdc normal: '+data.numeroTDC);
+		    console.log('tdc en numero: '+ Number(data.numeroTDC));
 		    var aprobado = aleatorio(1,9);
 		    if(aprobado < 4){
 		        console.log('El random es: ' + aprobado);
 
 		        //Insert a book document in the books database
-				transacciones.insert({status: 'rechazado', nombre: data.name, apellido: data.lastname}, null, function(err, body) {
+				transacciones.insert({status: 'rechazado', "nombre": data.name, "numeroTDC": data.numeroTDC, "nombreTDC": data.nombreTDC, "numerosSeguridad": data.numerosSeguridad, "fechaVencimiento": data.fechaVencimiento}, null, function(err, body) {
 				  if (!err){
 				    console.log(body);
 				  }
 				});
 
 				//Get a list of all books
-				transacciones.list(function(err, body){
+				/*transacciones.list(function(err, body){
 				  console.log(body.rows);
-				});
+				});*/
 
 		        //se debe crear el documento con data
 		        fn({"error": true, "message": "El banco rechazó el pago", "persona": "woot"});
 		    }
 		    else{
 		        console.log('El random es: ' + aprobado);
-		        transacciones.insert({status: 'aprobado', nombre: data.name, apellido: data.lastname}, null, function(err, body) {
+		        transacciones.insert({status: 'aprobado', "nombre": data.name, "numeroTDC": data.numeroTDC, "nombreTDC": data.nombreTDC, "numerosSeguridad": data.numerosSeguridad, "fechaVencimiento": data.fechaVencimiento}, null, function(err, body) {
 				  if (!err){
 				    console.log(body);
 				  }
 				});
 
 				//Get a list of all books
-				transacciones.list(function(err, body){
+				/*transacciones.list(function(err, body){
 				  console.log(body.rows);
-				});
+				});*/
 		        //se debe crear el documento con data
 		        fn({"error": false, "message": "El banco aprobó el pago", "persona": "woot"});
 		    }
