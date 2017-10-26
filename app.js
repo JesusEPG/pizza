@@ -2,12 +2,11 @@ var express = require('express');
 var socket_io    = require( "socket.io" );
 var clientio  = require('socket.io-client');
 var path = require('path');
-//var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose'); 
-var config      = require('./config/db'); // get db config file
+var config      = require('./config/db');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var passport  = require('passport');
@@ -26,7 +25,6 @@ app.io           = io;
 var client    = clientio.connect('http://localhost:3013');
 
 client.emit('clave','tobi', function (data) {
-    console.log('Sirvió!!!!!');
     console.log(data); // data will be 'woot'
     stringLlavePublica=data;
 });
@@ -37,6 +35,7 @@ io.on('connection', function (socket) {
         console.log('#tdc normal: '+data.numeroTDC);
         var numeroString = data.numeroTDC.toString();
         console.log('tdc string: '+ numeroString);
+
         var resultado = cryptico.encrypt(numeroString, stringLlavePublica);
         data.numeroTDC = resultado.cipher;
         console.log('#tdc cifrado: '+data.numeroTDC);
@@ -56,7 +55,7 @@ require('./config/passport')(passport);
 // Use the passport package in our application
 app.use(passport.initialize());
 
-var clientio  = require('socket.io-client');
+/*var clientio  = require('socket.io-client');
 var client    = clientio.connect('http://localhost:3013'); //cliente del server
 
 io.sockets.on('connection', function (socket) {
@@ -64,7 +63,7 @@ io.sockets.on('connection', function (socket) {
     console.log('clientserver data', data);
     client.emit('my event', data);
   });
-});
+});*/
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -82,37 +81,37 @@ var pizzas = [
                 },
                 {
                     id: 002,
-                    nombre: 'Margarita',
-                    ing: ['TOMATE', 'MOZZARELLA', 'JAMÓN DULCE'],
+                    nombre: 'Diavola',
+                    ing: ['CHORIZO PICANTE', 'MOZZARELLA', 'SALSA PICANTE'],
                     price: '56',
                     img:'/images/home/product1.jpg'
                 },
 
                 {
                     id: 003,
-                    nombre: 'Prosciutto',
-                    ing: ['TOMATE', 'MOZZARELLA', 'JAMÓN DULCE'],
+                    nombre: 'Hawaina',
+                    ing: ['TOMATE', 'MOZZARELLA', 'PIÑA'],
                     price: '56',
                     img:'/images/home/product1.jpg'
                 },
                 {
                     id: 004,
                     nombre: 'Margarita',
-                    ing: ['TOMATE', 'MOZZARELLA', 'JAMÓN DULCE'],
+                    ing: ['TOMATE', 'MOZZARELLA', 'ALBAHACA'],
                     price: '56',
                     img:'/images/home/product1.jpg'
                 },
                 {
                     id: 005,
-                    nombre: 'Prosciutto',
-                    ing: ['TOMATE', 'MOZZARELLA', 'JAMÓN DULCE'],
+                    nombre: '4 Quesos',
+                    ing: ['PROVOLONE', 'MOZZARELLA', 'PARMESANO', 'EMMENTAL'],
                     price: '56',
                     img:'/images/home/product1.jpg'
                 },
                 {
                     id: 006,
-                    nombre: 'Margarita',
-                    ing: ['TOMATE', 'MOZZARELLA', 'JAMÓN DULCE'],
+                    nombre: 'Pabellón',
+                    ing: ['CARAOTAS', 'MOZZARELLA', 'CARNE', 'TAJADAS'],
                     price: '56',
                     img:'/images/home/product1.jpg'
                 }

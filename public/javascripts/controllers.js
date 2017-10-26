@@ -176,7 +176,6 @@
 				"fechaVencimiento": $scope.fechaVencimiento
 			}
 			
-		    //se debe sustituir por los datos del formulario
 		    socket.emit('validacion', tdcData, function (data) {
 		        if (data.error) { 
 		            swal(data.message, 'Verifique nuevamente sus datos', 'error');
@@ -234,7 +233,6 @@
 			  });
         $scope.add = function(producto)
 			 {
-				 //alert(producto.total); return;
 				 var prod = {};
 				 prod.id = producto._id;
 				 prod.price = producto.price;

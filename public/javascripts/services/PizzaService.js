@@ -7,27 +7,22 @@ angular.module('PizzaService', [])
     return {
 
         get : function() {
-            console.log('Hola Servicio');
             return $http.get('/api/pizzas');
         },
-           // these will work when more API routes are defined on the Node side of things
-        // call to POST and create a new pizza
+        
         create : function(pizzaData) {
             return $http.post('/api/pizzas', pizzaData);
         },
 
-        // call to DELETE a pizza
         delete : function(id) {
             return $http.delete('/api/pizzas/' + id);
         },
 
         getCheckout: function() {
-            console.log('Hola Servicio Checkout');
             return $http.get('/checkout');
         },
 
         getProfile: function() {
-            console.log('Hola Servicio Checkout');
             return $http.get('/profile');
         }
     }       
@@ -109,7 +104,6 @@ angular.module('PizzaService', [])
         return {
 
           checkout : function(data) {
-              console.log('Hola Servicio Checkout');
               return $http.post('/checkout', data);
           }
     } 
