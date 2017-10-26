@@ -74,16 +74,22 @@
 								<span>US ${{product.price}}</span>
 								<label>Quantity:</label>
 								<input ng-init="product.total=1" ng-model="product.total" type="text" value="3"/>
-								 <select ng-init="product.total=1" ng-model="product.total">
-									 <option value="1">1</option>
-									 <option value="2">2</option>
-									 <option value="3">3</option>
-									 <option value="4">4</option>
-									 </select>
+								 <select ng-init="ingprducto" ng-model="ingprducto">
+									 <option value="Pimenton">Pimenton</option>
+									 <option value="Pimenton">Pimenton</option>
+									 <option value="Pimenton">Pimenton</option>
+									 <option value="Pimenton">Pimenton</option>
+								</select>
 								<button ng-click="add(product)"type="button" class="btn btn-fefault cart">
 									<i class="fa fa-shopping-cart" ></i>
 									Add to cart
 								</button>
+								<button type="button" class="btn btn-fefault cart" ng-click="checkout()">
+									<i><a href="javascript:void(0)"> </a> </i>Checkout
+
+								</button>
+
+						
 							</span>
 							<p><b>Availability:</b> In Stock</p>
 							<p><b>Condition:</b> New</p>
@@ -120,7 +126,7 @@
 				<tbody >
 					<tr ng-repeat="prod in udpShopContent">
 						<td class="cart_product">
-							<a href=""><img src="{{prod.img}}" alt=""></a>
+							<a href=""><img ng-src="{{prod.img}}" alt=""></a>
 						</td>
 						<td class="cart_description">
 							<h4><a href="">{{prod.nombre}}</a></h4>

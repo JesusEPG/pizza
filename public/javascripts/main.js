@@ -74,7 +74,7 @@ $(document).ready(function(){
 		    controller: 'detailController',
 		     })
 		  .state('cart', {
-    		url: '/cart/{id}',
+    		url: '/cart',
     		templateUrl: 'client/view/cart.ejs',
     		controller: 'cartController'
  			 });

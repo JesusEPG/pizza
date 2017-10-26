@@ -78,7 +78,7 @@
 	  });
 	})
 
-	.controller("cartController", function($scope, $state, $shop, $http, $stateParams, Pizza, socket, CheckoutService, $rootScope){
+	.controller("cartController", function($scope, $state, $shop, $http, $stateParams, Pizza, socket, CheckoutService, $rootScope, AuthService){
 
 		$scope.isDisabled = false;
 		
@@ -91,6 +91,15 @@
 			    // or server returns response with an error status.
 			    console.log(response);
 			  });
+
+        $http.get('/api/memberinfo').then(function(result) {
+	      $scope.memberinfo = result.data.msg;
+	    });
+
+	   	$scope.logout = function() {
+	   	 	AuthService.logout();
+	   		$state.go('login');
+	  	};
 
 		/**
 		* @desc - añade x cantidad de un producto al carrito
@@ -142,59 +151,50 @@
 			return total.toFixed(2);
 		}
 
-		/**
-		* @desc - formulario de paypal preparado para printar
-		*/
-		$scope.paypalData = function()
-		{
-			$shop.dataPayPal(userDataPayPal());
-		}
 
 		$scope.submit = function(htmlForm) {
 	    
-	    $scope.isDisabled = true;
+		    $scope.isDisabled = true;
 
-		var tdcData = {
-			"name": $scope.nombre,
-			"numeroTDC": $scope.numeroTDC, 
-			"nombreTDC": $scope.nombreTDC, 
-			"numerosSeguridad": $scope.numerosSeguridad, 
-			"fechaVencimiento": $scope.fechaVencimiento
-		}
-		
-
-	    //se debe sustituir por los datos del formulario
-	    socket.emit('validacion', tdcData, function (data) {
-	        if (data.error) { 
-	            alert(data.message);
-	            $scope.isDisabled = false; // Vuelve a habilitar el boton de comprar, para que se arreglen los errores
-
-	        } else { 
-         
-            	var cart = {
-				productos: $rootScope.udpShopContent,
-				precioTotal: $rootScope.udpShopTotalPrice,
-				cantidadProductos: $rootScope.udpShopTotalProducts
+			var tdcData = {
+				"name": $scope.nombre,
+				"numeroTDC": $scope.numeroTDC, 
+				"nombreTDC": $scope.nombreTDC, 
+				"numerosSeguridad": $scope.numerosSeguridad, 
+				"fechaVencimiento": $scope.fechaVencimiento
 			}
+			
+		    //se debe sustituir por los datos del formulario
+		    socket.emit('validacion', tdcData, function (data) {
+		        if (data.error) { 
+		            alert(data.message);
+		            $scope.isDisabled = false; // Vuelve a habilitar el boton de comprar, para que se arreglen los errores
 
-	            data = {
-	            	name: $scope.nombre,
-	            	cart: cart,
-                    address: $scope.direccion
-	            };
+		        } else { 
+	         
+	            	var cart = {
+					productos: $rootScope.udpShopContent,
+					precioTotal: $rootScope.udpShopTotalPrice,
+					cantidadProductos: $rootScope.udpShopTotalProducts
+				}
 
-	            CheckoutService.checkout(data)
-	            	.then(function(response) {
-		                console.log(response.data);
-		                $shop.destroy();
-		                alert('Su orden ha sido procesada!');
-		                $state.go('outside');
-		            }, function errorCallback(response) {
-					    // called asynchronously if an error occurs
-					    // or server returns response with an error status.
-					    console.log(response);
-					  });
+		            data = {
+		            	name: $scope.nombre,
+		            	cart: cart,
+	                    address: $scope.direccion
+		            };
 
+		            CheckoutService.checkout(data)
+		            	.then(function(response) {
+			                console.log(response.data);
+			                $shop.destroy();
+			                alert('Su orden ha sido procesada!');
+			                $state.go('outside');
+			            }, function errorCallback(response) {
+						    // called asynchronously if an error occurs
+						    // or server returns response with an error status.
+						    console.log(response);
+						  });
 	        }
 	    });
 
@@ -202,8 +202,8 @@
 				
 	})
 
-  	.controller('detailController', ['$scope', '$stateParams','$shop','Pizza',
-    	function($scope, $stateParams, $shop, Pizza) {
+  	.controller('detailController', ['$scope', '$stateParams','$shop','Pizza','$state',
+    	function($scope, $stateParams, $shop, Pizza, $state) {
 
       	Pizza.get()
             .then(function(response) {
@@ -261,6 +261,18 @@
 			 {
 			 	return total.toFixed(2);
 			 }
+		$scope.checkout = function(){
+        	Pizza.getCheckout()
+            .then(function(response) {
+                $state.go('checkout');
+            }, function errorCallback(response) {
+			    // called asynchronously if an error occurs
+			    // or server returns response with an error status.
+			    console.log(response);
+			    $state.go('login');
+			  });
+        }
+
 		
     }]);
 

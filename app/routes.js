@@ -74,28 +74,6 @@ var config = require('../config/db'); // get db config file
                     }
                   });
                 });
-
-        /*app.post('/checkout', function (req, res, next){
-
-                  //var cart = req.body.cart;
-
-                  var order = new Order({
-                    //user: req.user,
-                    cart: req.body.cart,
-                    address: req.body.address,
-                    name: req.body.name
-                  });
-
-                  order.save(function(err, result){
-                    if (err) {
-                        return res.send();
-                    }
-                    res.json({success: true, msj: 'Se guardó la orden en bdd'});
-                  });
-
-        });*/
-
-
         app.post('/checkout', passport.authenticate('jwt', { session: false}), function(req, res) {
                   var token = getToken(req.headers);
                   if (token) {
@@ -131,7 +109,6 @@ var config = require('../config/db'); // get db config file
                   }
         });
         
-
         // route to a restricted info (GET http://localhost:3000/api/memberinfo)
         app.get('/checkout', passport.authenticate('jwt', { session: false}), function(req, res) {
                   var token = getToken(req.headers);
@@ -166,7 +143,7 @@ var config = require('../config/db'); // get db config file
                         if (!user) {
                           return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
                         } else {
-                          res.json({success: true, msg: 'Welcome in the member area ' + user._id + '!'});
+                          res.json({success: true, msg: user.name + '!'});
                         }
                     });
                   } else {

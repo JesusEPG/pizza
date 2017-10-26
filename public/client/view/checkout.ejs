@@ -8,85 +8,58 @@
 		</div><!--/breadcrums-->
 
 		<div class="step-one">
-			<h2 class="heading">Paso 1</h2>
+			<h2 class="heading">Revisión & Pago</h2>
 		</div>
 		<div class="checkout-options">
-			<h3>Usuario nuevo</h3>
+			<h3>Usuario : {{memberinfo}}</h3>
 			<p>Opciones de pago</p>
 			<ul class="nav">
 				<li>
-					<label><input type="checkbox"> Registrar Cuenta</label>
+					<a href="">Ver factura</a>
 				</li>
 				<li>
-					<label><input type="checkbox">Checkout como invitado</label>
+					<a href=""><i class="fa fa-times"></i>Cancelar pedido</a>
 				</li>
 				<li>
-					<a href=""><i class="fa fa-times"></i>Cancel</a>
+					<a href="" ng-click="logout()"> <i class="fa fa-times"></i>Cerrar la sesión</a>
 				</li>
 			</ul>
 		</div><!--/checkout-options-->
 
 		<div class="register-req">
-			<p>Use registro y pago para obtener fácilmente acceso al historial de su pedido, o utilice Checkout como invitado</p>
+			<p>Para poder comprar tienes que: <br> introducir los datos de la tarjeta y esperar que el banco responda</p>
 		</div><!--/register-req-->
 
 		<div class="shopper-informations">
 			<div class="row">
 				<div class="col-sm-3">
 					<div class="shopper-info">
-						<p>Información del comprador</p>
-						<form name="myForm" ng-submit="submit(myForm)" novalidate>
-						    <input type="text" placeholder="Nombre" ng-model="nombre">
-							<input type="number" placeholder="Número de tarjeta" ng-model="numeroTDC">
-							<input type="text" placeholder="Nombre del titular de la TDC" ng-model="nombreTDC">
-							<input type="number" placeholder="Números de seguridad" ng-model="numerosSeguridad">
-							<input type="date" placeholder="Fecha de vencimiento de la TDC" ng-model="fechaVencimiento">
-							<input type="text" placeholder="Email" ng-model="email">
-							<input type="text" placeholder="Dirección" ng-model="direccion">
-						    <button type="submit" class="btn btn-primary" ng-disabled="isDisabled">Comprar</button>
-						</form>
-						<a class="btn btn-primary" href="">Ir</a>
-						<a class="btn btn-primary" href="">Continuar</a>
+						<a class="btn btn-primary" href="">Regresar</a>
 					</div>
 				</div>
 				<div class="col-sm-5 clearfix">
 					<div class="bill-to">
-						<p>Cobrar a</p>
-						<div class="form-one">
-							<form>
-								<input type="text" placeholder="Tipo de tarjeta">
-								<input type="text" placeholder="Correo*">
-								<input type="text" placeholder="Titulo">
-								<input type="text" placeholder="Primer nombre *">
-								<input type="text" placeholder="Segundo nombre">
-								<input type="text" placeholder="Apellido *">
-								<input type="text" placeholder="Dirección 1 *">
-								<input type="text" placeholder="Dirección 2">
+						<div class="shopper-info">
+							<p>Información de la tarjeta</p>
+							<form name="myForm" ng-submit="submit(myForm)" novalidate>
+							    <input type="text" placeholder="Nombre" ng-model="nombre">
+								<input type="number" placeholder="Número de tarjeta" ng-model="numeroTDC">
+								<input type="text" placeholder="Nombre del titular de la TDC" ng-model="nombreTDC">
+								<input type="number" placeholder="Números de seguridad" ng-model="numerosSeguridad">
+								<input type="date" placeholder="Fecha de vencimiento de la TDC" ng-model="fechaVencimiento">
+								<input type="text" placeholder="Email" ng-model="email">
+								<input type="text" placeholder="Dirección" ng-model="direccion">
+							    <button type="submit" class="btn btn-primary" ng-disabled="isDisabled">Comprar</button>
 							</form>
-						</div>
-						<div class="form-two">
-							<form>
-								<input type="text" placeholder="Zip / Zona postal*">
-								<select>
-									<option>-- País-</option>
-									<option>United States</option>
-									<option>Venezuela</option>									
-								</select>
-								<input type="password" placeholder="Confirmar Contraseña">
-								<input type="text" placeholder="Teléfono*">
-								<input type="text" placeholder="Celular">
-								<input type="text" placeholder="Fax">
-							</form>
+							
 						</div>
 					</div>
 				</div>
 				<div class="col-sm-4">
 					<div class="order-message">
-						<p>Orden de envío</p>
-						<textarea name="message"  placeholder="Notas sobre su pedido, notas especiales para entrega" rows="16"></textarea>
-						<label><input type="checkbox"> Envío a la dirección de facturación</label>
+						<a class="btn btn-primary" href="">Volver al carrito</a>
 					</div>	
-				</div>					
+				</div>				
 			</div>
 		</div>
 		<div class="review-payment">
@@ -108,7 +81,7 @@
 				<tbody>
 					<tr ng-repeat="prod in udpShopContent">
 						<td class="cart_product">
-							<a href=""><img src="{{prod.img}}" alt=""></a>
+							<a href=""><img ng-src="{{prod.img}}" alt=""></a>
 						</td>
 						<td class="cart_description">
 							<h4><a href="">{{prod.nombre}}</a></h4>
@@ -141,17 +114,6 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="payment-options">
-				<span>
-					<label><input type="checkbox"> Direct Bank Transfer</label>
-				</span>
-				<span>
-					<label><input type="checkbox"> Check Payment</label>
-				</span>
-				<span>
-					<label><input type="checkbox"> Paypal</label>
-				</span>
-			</div>
 	</div>
 </section> <!--/#cart_items-->
 
