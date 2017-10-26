@@ -122,7 +122,8 @@ angular.module('PizzaService', [])
 
     .factory('socket', function($rootScope) {
 
-        var socket = io.connect('http://localhost:3000');
+        //var socket = io.connect('http://localhost:3000');
+        var socket = io.connect('http://127.0.0.1:3000');
 
         return {
             emit: function(eventName, data, callback) {

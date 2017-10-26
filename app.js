@@ -22,7 +22,7 @@ var stringLlavePublica;
 // Socket.io
 var io           = socket_io();
 app.io           = io;
-var client    = clientio.connect('http://localhost:3013');
+var client    = clientio.connect('http://127.0.0.1:3013');
 
 client.emit('clave','tobi', function (data) {
     console.log(data); // data will be 'woot'
