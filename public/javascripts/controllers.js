@@ -279,6 +279,14 @@
 			 {
 			 	return total.toFixed(2);
 			 }
+		$scope.agregarExtra = function (newIng1) {
+		    
+		       $scope.product.ing.push({ing: newIng1});
+		       $scope.product.price= $scope.product.price + 8;
+
+		     
+		    }
+
 		$scope.checkout = function(){
         	Pizza.getCheckout()
             .then(function(response) {

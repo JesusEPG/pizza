@@ -72,14 +72,20 @@
 							<img src="images/product-details/rating.png" alt="" />
 							<span>
 								<span>US ${{product.price}}</span>
-								<label>Quantity:</label>
+								<label>Cantidad:</label>
 								<input ng-init="product.total=1" ng-model="product.total" type="text" value="3"/>
-								 <select ng-init="ingprducto" ng-model="ingprducto">
-									 <option value="Pimenton">Pimenton</option>
-									 <option value="Pimenton">Pimenton</option>
-									 <option value="Pimenton">Pimenton</option>
-									 <option value="Pimenton">Pimenton</option>
+								<label>¿Deseas agregar algún ingrediente extra?</label> 
+								<p><b>Ingredientes Extras:</b> </p>
+								 <select ng-init="PIMENTON" ng-model="newIng">
+									 <option value="ExtraCEBOLLA">CEBOLLA</option>
+									 <option value="ExtraMAIZ">MAIZ</option>
+									 <option value="ExtraTOCINETA">TOCINETA</option>
+									 <option value="ExtraJAMÓN">JAMÓN</option>
 								</select>
+								<button type="button" value="Agregar" ng-click="agregarExtra(newIng)" class="btn btn-fefault cart">
+									Agregar
+								</button>
+								    
 								<button ng-click="add(product)"type="button" class="btn btn-fefault cart">
 									<i class="fa fa-shopping-cart" ></i>
 									Add to cart
@@ -91,9 +97,6 @@
 
 						
 							</span>
-							<p><b>Availability:</b> In Stock</p>
-							<p><b>Condition:</b> New</p>
-							<p><b>Brand:</b> E-SHOPPER</p>
 							<a href=""><img src="images/product-details/share.png" class="share img-responsive"  alt="" /></a>
 						</div><!--/product-information-->
 					</div>
