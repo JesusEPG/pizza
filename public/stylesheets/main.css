@@ -1281,6 +1281,7 @@ h2.title {
   font-family: 'Roboto', sans-serif;
   font-weight: 700;
   margin-right: 5px;
+  margin-bottom: 30px;
 }
 
 .share {
@@ -1767,7 +1768,8 @@ h2.title {
   padding: 5px;
   width: 100%;
   border-radius: 0;
-  resize: none
+  resize: none;
+  margin-bottom: 30px
 }
 
 .user_info select:focus {

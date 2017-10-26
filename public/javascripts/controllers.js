@@ -48,15 +48,16 @@
 	 
 	  $scope.login = function() {
 	    AuthService.login($scope.user).then(function(msg) {
-	      $state.go('inside');
+	      $state.go('profile');
 	    }, function(errMsg) {
+	    	console.log("Hubo un error")
 	      var alertPopup = swal( "Inicio de sesión falló!", errMsg, 'error');
 	    });
 	  };
 
 	  $scope.signup = function() {
 	    AuthService.register($scope.user).then(function(msg) {
-	      $state.go('register');
+	      $state.go('login');
 	     alert('Registro exitoso!', msg, 'success');
 	    }, 
 	    function(errMsg) {
@@ -241,7 +242,6 @@
 				 prod.ing = producto.ing;
 				 prod.qty = parseInt(producto.total || 1,10);
 				 $shop.add(prod);
-				 console.log(producto);
 				
 			 }
  
@@ -279,11 +279,9 @@
 			 }
 		$scope.agregarExtra = function (newIng1) {
 		    
-		       $scope.product.ing.push({ing: newIng1});
+		       $scope.product.ing.push(newIng1);
 		       $scope.product.price= $scope.product.price + 8;
-
-		     
-		    }
+		       }
 
 		$scope.checkout = function(){
         	Pizza.getCheckout()
