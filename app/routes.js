@@ -10,11 +10,6 @@ var jwt = require('jwt-simple');
 var config = require('../config/db'); // get db config file
     module.exports = function(app) {
 
-        // server routes ===========================================================
-        // handle things like api calls
-        // authentication routes
-
-        // api routes
         app.get('/api/pizzas', function(req, res) {
 
             // use mongoose to get all nerds in the database
@@ -34,7 +29,7 @@ var config = require('../config/db'); // get db config file
 
         app.post('/api/signup', function(req, res) {
           if (!req.body.name || !req.body.password) {
-            res.json({success: false, msg: 'Please pass name and password.'});
+            res.json({success: false, msg: 'Por favor, ingrese Nombre y Contraseña'});
           } else {
             var newUser = new User({
               name: req.body.name,
@@ -43,9 +38,9 @@ var config = require('../config/db'); // get db config file
             // save the user
             newUser.save(function(err) {
               if (err) {
-                return res.json({success: false, msg: 'Username already exists.'});
+                return res.json({success: false, msg: 'Nombre de usuario ya existe'});
               }
-              res.json({success: true, msg: 'Successful created new user.'});
+              res.json({success: true, msg: 'Usuario creado exitosamente'});
             });
           }
         });
@@ -106,6 +101,36 @@ var config = require('../config/db'); // get db config file
                     });
                   } else {
                     return res.status(403).send({success: false, msg: 'No token provided.'});
+                  }
+        });
+
+        app.get('/profile', passport.authenticate('jwt', { session: false}), function(req, res) {
+                  var token = getToken(req.headers);
+                  if (token) {
+                    var decoded = jwt.decode(token, config.secret);
+                    User.findOne({
+                      name: decoded.name
+                    }, function(err, user) {
+                        if (err) throw err;
+                 
+                        if (!user) {
+                          return res.status(403).send({success: false, msg: 'Usuario no encontrado'});
+                        } else {
+                          //var cart = req.body.cart;
+
+                          Order.find({user: user}, function(err, orders){
+                            if (err) {
+                                return res.write('Error');
+                            }
+                            //res.json({success: true, ordenes: orders});
+                            res.json(orders); // return all nerds in JSON format
+
+                          });
+                          //res.json({success: true, msg: 'Welcome in the member area ' + user._id + '!'});
+                        }
+                    });
+                  } else {
+                    return res.status(403).send({success: false, msg: 'No se dispone de un token'});
                   }
         });
         

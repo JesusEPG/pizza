@@ -46,6 +46,14 @@ $(document).ready(function(){
 		    templateUrl: 'client/view/login.ejs',
 		    controller: 'LoginCtrl'
 		  })
+		  .state('profile', {
+		    url: '/profile',
+		    templateUrl: 'client/view/profile.ejs',
+		    controller: 'ProfileController',
+		    params: {
+		        orders: null
+		    }
+		  })
 		  .state('register', {
 		    url: '/register',
 		    templateUrl: 'client/view/register.ejs'

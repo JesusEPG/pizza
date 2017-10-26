@@ -26,6 +26,18 @@
 			    $state.go('login');
 			  });
         }
+
+        $scope.profile = function(){
+        	Pizza.getProfile()
+            .then(function(response) {
+            	$state.go('profile', {orders: response.data});
+            }, function errorCallback(response) {
+			    // called asynchronously if an error occurs
+			    // or server returns response with an error status.
+			    console.log(response);
+			    $state.go('login');
+			  });
+        }
 	})
 
 	.controller('LoginCtrl', function($scope, AuthService, $state) {
@@ -38,17 +50,17 @@
 	    AuthService.login($scope.user).then(function(msg) {
 	      $state.go('inside');
 	    }, function(errMsg) {
-	      var alertPopup = alert( "Login failed!" + errMsg);
+	      var alertPopup = swal( "Inicio de sesión falló!", errMsg, 'error');
 	    });
 	  };
 
 	  $scope.signup = function() {
 	    AuthService.register($scope.user).then(function(msg) {
 	      $state.go('register');
-	     alert( "'Register success!'" + msg );
+	     alert('Registro exitoso!', msg, 'success');
 	    }, 
 	    function(errMsg) {
-	      var alertPopup = alert("'Register failed!'" + errMsg);
+	      var alertPopup = swal('Registro falló!', errMsg, "warning");
 	    });
 	  };
 	})
@@ -74,7 +86,7 @@
 	  $scope.$on(AUTH_EVENTS.notAuthenticated, function(event) {
 	    AuthService.logout();
 	    $state.go('login');
-	     alert("Session Lost! Sorry, You have to login again");
+	     swal('Sesión Perdida!', 'Por favor, vuelva a iniciar sesión', 'info');
 	  });
 	})
 
@@ -167,7 +179,7 @@
 		    //se debe sustituir por los datos del formulario
 		    socket.emit('validacion', tdcData, function (data) {
 		        if (data.error) { 
-		            alert(data.message);
+		            swal(data.message, 'Verifique nuevamente sus datos', 'error');
 		            $scope.isDisabled = false; // Vuelve a habilitar el boton de comprar, para que se arreglen los errores
 
 		        } else { 
@@ -188,7 +200,7 @@
 		            	.then(function(response) {
 			                console.log(response.data);
 			                $shop.destroy();
-			                alert('Su orden ha sido procesada!');
+			                swal('Gracias por su compra!', 'Su orden ha sido procesada', 'success');
 			                $state.go('outside');
 			            }, function errorCallback(response) {
 						    // called asynchronously if an error occurs
@@ -200,6 +212,12 @@
 
 	}
 				
+	})
+
+	.controller('ProfileController', function ($scope, Pizza, $state, $stateParams) {
+		
+		$scope.orders = $stateParams.orders;
+
 	})
 
   	.controller('detailController', ['$scope', '$stateParams','$shop','Pizza','$state',

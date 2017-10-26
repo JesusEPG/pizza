@@ -24,6 +24,11 @@ angular.module('PizzaService', [])
         getCheckout: function() {
             console.log('Hola Servicio Checkout');
             return $http.get('/checkout');
+        },
+
+        getProfile: function() {
+            console.log('Hola Servicio Checkout');
+            return $http.get('/profile');
         }
     }       
 
