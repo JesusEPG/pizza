@@ -9,7 +9,7 @@ Iniciar el servidor de MongoDB ejecutando el comando `mongod`
 
 Luego ir a la ruta `Banco`, instalar las dependencias con `npm install` y hacer `node banco.js`
 
-Por último, hacer `npm start` desde la raíz del proyecto
+Por último, hacer `npm start` desde el directorio `Pizza`
 
 # Caracteristicas
 
