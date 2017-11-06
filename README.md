@@ -7,7 +7,7 @@ Instalar todas las dependencias con `npm install`
 
 Iniciar el servidor de MongoDB ejecutando el comando `mongod`
 
-Luego ir a la ruta `Banco`, instalar las dependencias con `npm install` y hacer `node banco.js`
+Luego ir al directorio `Banco`, instalar las dependencias con `npm install` y hacer `node banco.js`
 
 Por último, hacer `npm start` desde el directorio `Pizza`
 
